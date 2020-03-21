@@ -17,8 +17,10 @@ services:
     volumes:
       # Site
       - ./web:/usr/share/nginx/html/
+      # Configuração do proxy reverso
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
-      - 8081:80
+      - 80:80
   
   app:
     image: python:3.6
@@ -27,5 +29,4 @@ services:
       - ./app:/app
     working_dir: /app
     command: bash ./app.sh
-    ports:
-      - 8080:8080
+    # não é preciso mais expor a porta do app, usando proxy reverso no frontend
